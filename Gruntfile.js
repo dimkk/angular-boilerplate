@@ -1,15 +1,19 @@
 module.exports = function (grunt) {
+    var path = require('path');
+    var configs = {
+        packageFilename: "package.js"
+    };
 
     grunt.initConfig({
         requirejs: {
             "compile-js": {
                 options: {
                     baseUrl: "app",
-                    mainConfigFile: "app/js/app.js",
-                    name: "js/app",
-                    out: "app/js/app.min.js",
+                    mainConfigFile: "app/main.js",
+                    name: "main",
+                    out: "app/main.min.js",
                     deps: ["lib/requirejs/require"],
-                    insertRequire: ["js/app"]
+                    insertRequire: ["main"]
                 }
             },
             "compile-css": {
@@ -24,6 +28,7 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-bower-task');
 

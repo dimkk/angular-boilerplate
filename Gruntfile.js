@@ -13,7 +13,11 @@ module.exports = function (grunt) {
                     name: "main",
                     out: "app/main.min.js",
                     deps: ["lib/requirejs/require"],
-                    insertRequire: ["main"]
+                    insertRequire: ["main"],
+                    onBuildRead: function (moduleName, path, contents) {
+                        var ngmin = require('ngmin');
+                        return ngmin.annotate(contents);
+                    }
                 }
             },
             "compile-css": {

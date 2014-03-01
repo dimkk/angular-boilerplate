@@ -59,7 +59,7 @@ define(function (require) {
             }]);
         }]);
 
-    app.run( ['$rootScope', function ($rootScope) {
+    app.run( function ($rootScope) {
         $rootScope.$safeApply = function (fn) {
             var phase = this.$root.$$phase;
             if (phase == '$apply' || phase == '$digest') {
@@ -71,7 +71,7 @@ define(function (require) {
             }
         };
 
-    }]);
+    });
 
     angular.bootstrap(document, ['App']);
 });

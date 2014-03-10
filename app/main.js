@@ -1,69 +1,64 @@
 require.config({
-    baseUrl: 'app',
+    baseUrl: "app",
     paths: {
-        'jquery': 'lib/jquery/dist/jquery',
-        'angular': 'lib/angular/angular',
-        'text': 'lib/requirejs-text/text'
+        "jquery": "lib/jquery/dist/jquery",
+        "angular": "lib/angular/angular",
+        "text": "lib/requirejs-text/text"
     },
     shim: {
-        'jquery': {
-            exports: 'jQuery'
+        "jquery": {
+            exports: "jQuery"
         },
-        'angular': {
-            exports: 'angular',
-            'deps': ['jquery']
+        "angular": {
+            exports: "angular",
+            "deps": ["jquery"]
         },
-        'lib/angular-route/angular-route': {
-            'deps': ['angular']
+        "lib/angular-route/angular-route": {
+            "deps": ["angular"]
         }
     },
     config: {
-        'services': {
-            apiUrl: 'http://localhost/api'
+        "services": {
+            apiUrl: "http://localhost/api"
         }
     }
 });
 
 define(function (require) {
-    require('controllers');
-    require('services');
-    require('directives');
-    require('filters');
-    require('lib/angular-route/angular-route');
-    require('somemodule/main');
+    require("controllers/_package");
+    require("services/_package");
+    require("filters/_package");
+    require("directives/_package");
+    require("lib/angular-route/angular-route");
+	require("modules/first/main");
 
-    var angular = require('angular');
+    var angular = require("angular");
 
-    var app = angular.module('App', ['App.controllers', 'App.services', 'App.directives', 'App.filters', 'ngRoute','Somemodule'],
-        ['$provide', '$routeProvider', '$httpProvider', function ($provide, $routeProvider, $httpProvider) {
+    var app = angular.module("App", ["App.controllers", "App.services", "App.directives", "App.filters", "ngRoute","First"],
+        ["$provide", "$routeProvider", "$httpProvider", function ($provide, $routeProvider, $httpProvider) {
             $routeProvider
-                .when('/', {
-                    controller: 'MainCtrl',
-                    template: require('text!templates/views/main.html')
-                });
+				.when("/first", {
+					controller:"AppFirstCtrl",
+					template:require("text!templates/views/first.html")
+				});
 
-            $httpProvider.interceptors.push(['$q', '$error', function ($q, $error) {
+            $httpProvider.interceptors.push(function () {
                 return {
-                    'request': function (config) {
+                    "request": function (config) {
                         return config;
                     },
-                    'response': function (response) {
+                    "response": function (response) {
                         return response;
-                    },
-                    'responseError': function (rejection) {
-                        $error('Connection error!');
-                        return $q.reject(rejection);
                     }
-
                 }
-            }]);
+            });
         }]);
 
-    app.run( function ($rootScope) {
+    app.run(function ($rootScope) {
         $rootScope.$safeApply = function (fn) {
             var phase = this.$root.$$phase;
-            if (phase == '$apply' || phase == '$digest') {
-                if (fn && (typeof(fn) === 'function')) {
+            if (phase == "$apply" || phase == "$digest") {
+                if (fn && (typeof(fn) === "function")) {
                     fn();
                 }
             } else {
@@ -73,5 +68,5 @@ define(function (require) {
 
     });
 
-    angular.bootstrap(document, ['App']);
+    angular.bootstrap(document, ["App"]);
 });

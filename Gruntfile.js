@@ -1,9 +1,4 @@
 module.exports = function (grunt) {
-    var path = require('path');
-    var configs = {
-        packageFilename: "package.js"
-    };
-
     grunt.initConfig({
         requirejs: {
             "compile-js": {
@@ -32,7 +27,6 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-bower-task');
 

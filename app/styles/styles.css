@@ -1,6 +1,4 @@
 @import url("../lib/bootstrap/dist/css/bootstrap.css");
-@import url("directives/main-dir.css");
-
-.view {
-    margin-top: 10px;
-}
+@import url("directives/_styles.css");
+@import url("views/first.css");
+@import url("../modules/first/styles/styles.css");
